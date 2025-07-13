@@ -1,8 +1,6 @@
 ---@type LazySpecImport[]
 local M = {}
 
-local log = require 'log'
-
 -- Automatically import all plugins in lua/plugins/
 local cwdContent = vim.split(vim.fn.glob(vim.fn.stdpath 'config' .. '/lua/plugins/**/*.lua'), '\n', { trimempty = true })
 for _, s in pairs(cwdContent) do

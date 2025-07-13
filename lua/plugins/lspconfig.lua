@@ -5,7 +5,6 @@ return {
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for Neovim
     -- Mason must be loaded before its dependents so we need to set it up here.
-    -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
     { 'mason-org/mason.nvim', opts = {} },
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -143,13 +142,8 @@ return {
     }
 
     -- Ensure the servers and tools above are installed
-    --
-    -- You can add other tools here that you want Mason to install
-    -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, {
-      'stylua',
-    })
+    vim.list_extend(ensure_installed, require('config').ensured_installed.mason)
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
