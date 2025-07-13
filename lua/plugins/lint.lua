@@ -7,6 +7,14 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = require('config').linters_by_filetype
 
+      local luacheck = lint.linters.luacheck
+      if luacheck then
+        luacheck.args = {
+          '--globals',
+          'vim',
+        }
+      end
+
       -- Create autocommand which carries out the actual linting
       -- on the specified events.
       local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })

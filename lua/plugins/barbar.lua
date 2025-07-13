@@ -42,7 +42,18 @@ return {
       vim.keymap.set('n', key, cmd, { noremap = true, silent = true, desc = desc })
     end
 
-    map('<leader>c', '<cmd>BufferClose<CR>', 'Close Current Buffer')
+    map('<leader>c', function()
+      local name = vim.api.nvim_buf_get_name(0)
+      if vim.fn.getbufinfo(name)[1].changed == 1 then
+        local choice = vim.fn.confirm('Save changes to ' .. vim.fs.basename(name) .. '?', '&Yes\n&No\n&Cancel', 1)
+        if choice == 1 then
+          vim.cmd 'silent w'
+          vim.cmd 'BufferClose'
+        elseif choice == 2 then
+          vim.cmd 'BufferClose!'
+        end
+      end
+    end, 'Close Current Buffer')
     map('[b', '<Cmd>BufferPrevious<CR>', 'Go to Previous Buffer')
     map(']b', '<Cmd>BufferNext<CR>', 'Go to Next Buffer')
     map('<A-,>', '<Cmd>BufferMovePrevious<CR>', 'Re-order Buffer to Previous')
