@@ -42,8 +42,13 @@ return {
         vim.cmd 'BufferClose'
       end
     end, 'Close Current Buffer')
-    map('[b', '<Cmd>BufferPrevious<CR>', 'Go to Previous Buffer')
-    map(']b', '<Cmd>BufferNext<CR>', 'Go to Next Buffer')
+    map('<A-p>', '<Cmd>BufferPick<CR>', 'Pick Buffer')
+    map('[b', function()
+      vim.cmd('BufferPrevious ' .. vim.v.count)
+    end, 'Go to Previous Buffer')
+    map(']b', function()
+      vim.cmd('BufferNext ' .. vim.v.count)
+    end, 'Go to Next Buffer')
     map('<A-,>', '<Cmd>BufferMovePrevious<CR>', 'Re-order Buffer to Previous')
     map('<A-.>', '<Cmd>BufferMoveNext<CR>', 'Re-order Buffer to Next')
   end,
