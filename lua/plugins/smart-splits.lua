@@ -1,8 +1,11 @@
 ---@type LazySpec
 return {
   'mrjones2014/smart-splits.nvim',
+  event = 'BufAdd',
   config = function()
-    require('smart-splits').setup {}
+    require('smart-splits').setup {
+      default_amount = 2,
+    }
 
     vim.keymap.set({ 'n', 't' }, '<C-h>', require('smart-splits').move_cursor_left, { desc = 'Move focus to the left window' })
     vim.keymap.set({ 'n', 't' }, '<C-l>', require('smart-splits').move_cursor_right, { desc = 'Move focus to the right window' })

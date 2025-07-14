@@ -50,6 +50,7 @@ local M = {
       'taplo',
       'vtsls',
       'yaml-language-server',
+      'yamllint',
     },
     treesitter = {
       'bash',
@@ -75,7 +76,6 @@ local M = {
       'vimdoc',
       'vim',
       'xml',
-      'yamllint',
       'yaml',
     },
   },
