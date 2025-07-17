@@ -14,6 +14,13 @@ return {
           'vim',
         }
       end
+      local cmakelint = lint.linters.cmakelint
+      if cmakelint then
+        cmakelint.args = {
+          '--filter',
+          '-whitespace/indent',
+        }
+      end
 
       -- Create autocommand which carries out the actual linting
       -- on the specified events.
