@@ -19,6 +19,7 @@ return {
     dependencies = 'nvim-treesitter/nvim-treesitter',
     opts = {
       enable = true,
+      multiline_threshold = 5,
     },
   },
   {

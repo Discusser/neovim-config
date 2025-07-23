@@ -11,15 +11,15 @@ local M = {
   linters_by_filetype = {
     cmake = { 'cmakelint' },
     html = { 'markuplint' },
-    javascript = { 'eslint_d' },
     json = { 'jsonlint' },
     markdown = { 'markdownlint' },
     lua = { 'luacheck' },
-    typescript = { 'eslint_d' },
     yaml = { 'yamllint' },
   },
   ensured_installed = {
     mason = {
+      'asmfmt',
+      'asm-lsp',
       'basedpyright',
       'clangd',
       'cmake-language-server',
@@ -27,7 +27,6 @@ local M = {
       'cmakelint',
       'css-lsp',
       'emmet-ls',
-      'eslint_d',
       'eslint-lsp',
       'glsl_analyzer',
       'html-lsp',
@@ -53,6 +52,7 @@ local M = {
       'yamllint',
     },
     treesitter = {
+      'asm',
       'bash',
       'cmake',
       'cpp',

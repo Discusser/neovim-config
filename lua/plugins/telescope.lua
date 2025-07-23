@@ -11,6 +11,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'nvim-tree/nvim-web-devicons' },
+    { 'folke/todo-comments.nvim' },
   },
   config = function()
     -- [[ Configure Telescope ]]
@@ -48,6 +49,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = 'Search Recent Files' })
     vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Search Open [B]uffers' })
     vim.keymap.set('n', '<leader>f/', builtin.current_buffer_fuzzy_find, { desc = 'Search in Current File' })
+    vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<CR>', { desc = 'Search [T]odos' })
     vim.keymap.set('n', '<leader>fo', function()
       builtin.live_grep {
         grep_open_files = true,

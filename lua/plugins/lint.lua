@@ -18,7 +18,7 @@ return {
       if cmakelint then
         cmakelint.args = {
           '--filter',
-          '-whitespace/indent',
+          '-whitespace/indent,-linelength',
         }
       end
 
