@@ -21,8 +21,6 @@ return { -- Autoformat
         lsp_format = 'fallback',
       }
     end,
-    formatters_by_ft = {
-      lua = { 'stylua' },
-    },
+    formatters_by_ft = require('config').formatters_by_filetype,
   },
 }

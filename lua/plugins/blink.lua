@@ -7,6 +7,7 @@ end
 return {
   'Saghen/blink.cmp',
   event = { 'InsertEnter', 'CmdlineEnter' },
+  version = '1.*',
   opts_extend = { 'sources.default', 'cmdline.sources', 'term.sources' },
   opts = {
     sources = {

@@ -74,6 +74,10 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+vim.o.wrap = false
+
+vim.o.autoread = true
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -88,4 +92,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.o.wrap = false
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { '*' },
+})
+
+vim.api.nvim_create_autocmd(
+  { 'FileChangedShellPost' },
+  { command = 'echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None', pattern = { '*' } }
+)
+-- " trigger `autoread` when files changes on disk
+--   set autoread
+--   autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+-- " notification after file change
+--   autocmd FileChangedShellPost *
+--     \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl Noneim.o.foldenable = false

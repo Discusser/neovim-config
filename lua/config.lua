@@ -3,11 +3,16 @@
 ---@field treesitter string[] A list of treesitter parsers that should be installed
 
 ---@class Config
+---@field formatters_by_filetype table<string, string[]> A table that is passed to 'conform'. The key is a filetype, and the value is a list of formatters for that filetype.
 ---@field linters_by_filetype table<string, string[]> A table that is passed to 'nvim-lint'. The key is a filetype, and the value is a list of linters for that filetype.
 ---@field ensured_installed EnsureInstalled
 
 ---@type Config
 local M = {
+  formatters_by_filetype = {
+    lua = { 'stylua' },
+    ocaml = { 'ocamlformat' },
+  },
   linters_by_filetype = {
     cmake = { 'cmakelint' },
     html = { 'markuplint' },
@@ -39,6 +44,8 @@ local M = {
       'marksman',
       'markuplint',
       'mesonlsp',
+      'ocaml-lsp',
+      'ocamlformat',
       'prettierd',
       'ruff',
       'selene',
@@ -69,6 +76,7 @@ local M = {
       'markdown_inline',
       'markdown',
       'meson',
+      'ocaml',
       'python',
       'svelte',
       'toml',
