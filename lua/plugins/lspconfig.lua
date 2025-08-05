@@ -161,5 +161,27 @@ return {
         end,
       },
     }
+
+    -- Manually set up ocamllsp because we install it via opam rather than Mason
+    local language_id_of = {
+      menhir = 'ocaml.menhir',
+      ocaml = 'ocaml',
+      ocamlinterface = 'ocaml.interface',
+      ocamllex = 'ocaml.ocamllex',
+      reason = 'reason',
+      dune = 'dune',
+    }
+
+    vim.lsp.config('ocamllsp', {
+      filetypes = { 'ocaml', 'menhir', 'ocamlinterface', 'ocamllex', 'reason', 'dune' },
+      root_dir = function(bufnr, on_dir)
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        on_dir(require('lspconfig.util').root_pattern('*.opam', 'esy.json', 'package.json', '.git', 'dune-project', 'dune-workspace')(fname))
+      end,
+      get_language_id = function(_, ftype)
+        return language_id_of[ftype]
+      end,
+    })
+    vim.lsp.enable 'ocamllsp'
   end,
 }

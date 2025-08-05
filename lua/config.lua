@@ -44,8 +44,6 @@ local M = {
       'marksman',
       'markuplint',
       'mesonlsp',
-      'ocaml-lsp',
-      'ocamlformat',
       'prettierd',
       'ruff',
       'selene',
