@@ -1,3 +1,10 @@
+-- taken from https://github.com/LazyVim/LazyVim/blob/25abbf546d564dc484cf903804661ba12de45507/lua/lazyvim/util/init.lua#L250
+local function get_pkg_path(pkg, path, opts)
+  local root = vim.env.MASON or (vim.fn.stdpath 'data' .. '/mason')
+  path = path or ''
+  return root .. '/packages/' .. pkg .. '/' .. path
+end
+
 ---@type LazySpec
 return {
   -- Main LSP Configuration
@@ -128,22 +135,40 @@ return {
     --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-    local servers = {
-      -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
-      lua_ls = {
-        settings = {
-          Lua = {
-            completion = {
-              callSnippet = 'Replace',
+    vim.lsp.config('lua_ls', {
+      settings = {
+        Lua = {
+          completion = {
+            callSnippet = 'Replace',
+          },
+        },
+      },
+    })
+    vim.lsp.config('svelte', {
+      capabilities = {
+        workspace = {
+          didChangeWatchedFiles = vim.fn.has 'nvim-0.10' == 0 and { dynamicRegistration = true },
+        },
+      },
+    })
+    vim.lsp.config('vtsls', {
+      settings = {
+        vtsls = {
+          tsserver = {
+            globalPlugins = {
+              {
+                name = 'typescript-svelte-plugin',
+                location = get_pkg_path('svelte-language-server', '/node_modules/typescript-svelte-plugin'),
+                enableForWorkspaceTypeScriptVersions = true,
+              },
             },
           },
         },
       },
-    }
+    })
 
     -- Ensure the servers and tools above are installed
-    local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, require('config').ensured_installed.mason)
+    local ensure_installed = require('config').ensured_installed.mason
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -152,12 +177,10 @@ return {
       automatic_installation = false,
       handlers = {
         function(server_name)
-          local server = servers[server_name] or {}
           -- This handles overriding only values explicitly passed
           -- by the server configuration above. Useful when disabling
           -- certain features of an LSP (for example, turning off formatting for ts_ls)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
+          require('lspconfig')[server_name].setup { capabilities = capabilities }
         end,
       },
     }

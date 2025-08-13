@@ -9,7 +9,7 @@ return {
         border = 'rounded',
       },
       hint_enable = false,
-      ignore_error = function(err, ctx, config)
+      ignore_error = function(err, ctx, _)
         -- -- ignore error for some clients
         -- -- this will also make it a bit harder to track issues
         if ctx and ctx.client_id then
